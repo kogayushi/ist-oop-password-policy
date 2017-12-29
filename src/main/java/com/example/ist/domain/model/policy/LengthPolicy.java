@@ -14,7 +14,7 @@ public class LengthPolicy implements Policy {
     @Override
     public boolean isSatisfiedBy(AuthenticationFactor factor) {
         int length =factor.getValue().length();
-        return this.min < length && length < max;
+        return this.min <= length && length <= max;
     }
 
 }
