@@ -1,7 +1,7 @@
 package com.example.ist.domain.model.policy;
 
 import com.example.ist.domain.model.identity.Password;
-import com.example.ist.exception.ViolatedPasswordPolicyException;
+import com.example.ist.exception.ViolatedPolicyException;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class PasswordPolicy {
             if (policy.isSatisfiedBy(password) == false) {
                 String msg = String.format("inputted password violated %s", policy.policyName());
                 log.warn(msg);
-                throw new ViolatedPasswordPolicyException(msg);
+                throw new ViolatedPolicyException(msg);
             }
         }
     }

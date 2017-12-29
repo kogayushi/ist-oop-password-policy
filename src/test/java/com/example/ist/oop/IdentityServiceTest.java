@@ -4,7 +4,7 @@ import com.example.ist.domain.model.identity.User;
 import com.example.ist.domain.model.identity.Password;
 import com.example.ist.domain.model.identity.UserRepository;
 import com.example.ist.domain.model.policy.PolicyFactory;
-import com.example.ist.exception.ViolatedPasswordPolicyException;
+import com.example.ist.exception.ViolatedPolicyException;
 import com.example.ist.infrastructure.persistence.InMemoryUserRepository;
 import com.example.ist.oop.command.ChangePasswordCommand;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class IdentityServiceTest {
     private static final String SAME_WITH_TELEPHONE_NUMBER          = "090-1234-5678";
 
     @DataPoints("policySatisfiedPasswords")
-    public static String[] POLICY_SATISFIED_PASSWORD_FIXTRUE = {"Passw00rd", "Hogeh0ge", "WhiteDay314"};
+    public static String[] POLICY_SATISFIED_PASSWORD_FIXTURE = {"Passw00rd", "Hogeh0ge", "WhiteDay314"};
 
     @DataPoints("policyViolatedPasswords")
     public static String[] POLICY_VIOLATED_PASSWORD_FIXTURE = { SHORTER_THAN_8,
@@ -101,7 +101,7 @@ public class IdentityServiceTest {
     @Theory
     public void testChangePasswordWithPolicyViolatedPassword(@FromDataPoints("policyViolatedPasswords") String fixture) throws Exception {
         // set up
-        thrown.expect(ViolatedPasswordPolicyException.class);
+        thrown.expect(ViolatedPolicyException.class);
 
         try {
 
