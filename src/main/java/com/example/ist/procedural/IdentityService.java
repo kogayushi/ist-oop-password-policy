@@ -58,7 +58,7 @@ public class IdentityService {
         }
 
         if (user.getUsername().equalsIgnoreCase(newPassword)) {
-            String msg = "inputted password violated not same with username policy";
+            String msg = "inputted password violated not same with current username policy";
             log.warn(msg);
             throw new ViolatedPasswordPolicyException(msg);
         }
