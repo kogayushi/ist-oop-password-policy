@@ -27,7 +27,7 @@ public class IdentityService {
     public void changePassword(String id, String newPassword) {
         User user = this.userRepository.userFromId(UUID.fromString(id));
 
-        if (newPassword.length() < 4 || newPassword.length() > 20) {
+        if (newPassword.length() < 8 || newPassword.length() > 20) {
             String msg = "inputted password violated password length policy";
             log.warn(msg); // it's warn just for testing.
             throw new ViolatedPasswordPolicyException(msg);
