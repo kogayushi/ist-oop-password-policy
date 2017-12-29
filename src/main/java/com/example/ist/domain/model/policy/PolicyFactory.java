@@ -33,4 +33,25 @@ public class PolicyFactory {
         return new PasswordPolicy(policies);
     }
 
+    @SuppressWarnings("unchecked")
+    public UsernamePolicy generateUsernamePolicyFor(User user) {
+        Set<Policy> policies = new LinkedHashSet<>();
+
+        policies.add(new LengthPolicy(8, 20));
+        // Compositeパターン refer -> https://ja.wikipedia.org/wiki/Composite_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3
+        policies.add(new CharacterCombinationPolicy());
+
+        policies.add(new NotSameWithCurrentUsernamePolicy(user.getUsername()));
+        policies.add(new NotSameWithCurrentPasswordPolicy(user.getUsername()));
+
+        Person person = user.getPerson();
+
+        policies.add(new NotIncludingNamePolicy(person.getFirstName(), person.getLastName()));
+
+        ContactInformation contactInformation = person.getContactInformation();
+        policies.add(new NotSameWithMailAddressPolicy(contactInformation.getMailAddress()));
+        policies.add(new NotSameWithTelephonNumberPolicy(contactInformation.getTelephoneNumber()));
+
+        return new UsernamePolicy(policies);
+    }
 }
