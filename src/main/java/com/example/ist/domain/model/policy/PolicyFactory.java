@@ -14,6 +14,7 @@ public class PolicyFactory {
     @SuppressWarnings("unchecked")
     public PasswordPolicy generatePasswordPolicyFor(User user) {
         Set<Policy> policies = generateCommonPolicy(user);
+        policies.add(new LengthPolicy(8, 20));
 
         return new PasswordPolicy(policies);
     }
@@ -22,6 +23,7 @@ public class PolicyFactory {
     @SuppressWarnings("unchecked")
     public UsernamePolicy generateUsernamePolicyFor(User user) {
         Set<Policy> policies = generateCommonPolicy(user);
+        policies.add(new LengthPolicy(4, 20));
 
         return new UsernamePolicy(policies);
     }
@@ -29,7 +31,6 @@ public class PolicyFactory {
     private Set<Policy> generateCommonPolicy(User user) {
         Set<Policy> policies = new LinkedHashSet<>();
 
-        policies.add(new LengthPolicy(8, 20));
         // Compositeパターン refer -> https://ja.wikipedia.org/wiki/Composite_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3
         policies.add(new CharacterCombinationPolicy());
 
