@@ -15,6 +15,7 @@ public class PolicyFactory {
     public PasswordPolicy generatePasswordPolicyFor(User user) {
         Set<Policy> policies = generateCommonPolicy(user);
         policies.add(new LengthPolicy(8, 20));
+        policies.add(new NotSameWithMailAddressPolicy(user.getPerson().getContactInformation().getMailAddress()));
 
         return new PasswordPolicy(policies);
     }
@@ -42,7 +43,6 @@ public class PolicyFactory {
         policies.add(new NotIncludingNamePolicy(person.getFirstName(), person.getLastName()));
 
         ContactInformation contactInformation = person.getContactInformation();
-        policies.add(new NotSameWithMailAddressPolicy(contactInformation.getMailAddress()));
         policies.add(new NotSameWithTelephonNumberPolicy(contactInformation.getTelephoneNumber()));
         return policies;
     }
