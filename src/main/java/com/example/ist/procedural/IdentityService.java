@@ -27,6 +27,12 @@ public class IdentityService {
     public void changePassword(String id, String newPassword) {
         User user = this.userRepository.userFromId(UUID.fromString(id));
 
+        if (newPassword.length() < 8 || newPassword.length() > 20) {
+            String msg = "inputted password violated password length policy";
+            log.warn(msg); // it's warn just for testing.
+            throw new ViolatedPolicyException(msg);
+        }
+
         this.validateCommonPolicy(newPassword, user, "password");
 
         this.userRepository.updatePassword(user.getId(), new Password(newPassword));
@@ -34,9 +40,14 @@ public class IdentityService {
     }
 
 
-
     public void changeUsername(String id, String newUsername) {
         User user = this.userRepository.userFromId(UUID.fromString(id));
+
+        if (newUsername.length() < 4 || newUsername.length() > 20) {
+            String msg = "inputted username violated password length policy";
+            log.warn(msg); // it's warn just for testing.
+            throw new ViolatedPolicyException(msg);
+        }
 
         this.validateCommonPolicy(newUsername, user, "username");
 
@@ -45,11 +56,6 @@ public class IdentityService {
     }
 
     private void validateCommonPolicy(String newAuthenticationFactor, User user, String name) {
-        if (newAuthenticationFactor.length() < 8 || newAuthenticationFactor.length() > 20) {
-            String msg = "inputted " + name + " violated password length policy";
-            log.warn(msg); // it's warn just for testing.
-            throw new ViolatedPolicyException(msg);
-        }
 
         if (INCLUDING_UPPER_CASE_ALPHABET_AT_LEAST_ONE.matcher(newAuthenticationFactor).find() == false) {
             String msg = "inputted " + name + " violated character policy";
