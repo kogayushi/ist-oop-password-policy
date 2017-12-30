@@ -33,6 +33,12 @@ public class IdentityService {
             throw new ViolatedPolicyException(msg);
         }
 
+        if (newPassword.equals(user.getPerson().getContactInformation().getMailAddress().getValue())) {
+            String msg = "inputted password violated not same with mail address policy";
+            log.warn(msg);
+            throw new ViolatedPolicyException(msg);
+        }
+
         this.validateCommonPolicy(newPassword, user, "password");
 
         this.userRepository.updatePassword(user.getId(), new Password(newPassword));
@@ -105,14 +111,8 @@ public class IdentityService {
             throw new ViolatedPolicyException(msg);
         }
 
-        if (newAuthenticationFactor.equals(user.getPerson().getContactInformation().getMailAddress().getValue())) {
-            String msg = "inputted " + name + " violated not same with mail address policy";
-            log.warn(msg);
-            throw new ViolatedPolicyException(msg);
-        }
-
         if (newAuthenticationFactor.equals(user.getPerson().getContactInformation().getTelephoneNumber().getValue())) {
-            String msg = "inputted " + name + " violated not same with mail address policy";
+            String msg = "inputted " + name + " violated not same with mail telephone policy";
             log.warn(msg);
             throw new ViolatedPolicyException(msg);
         }
