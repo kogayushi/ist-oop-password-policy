@@ -11,7 +11,7 @@ import java.util.Set;
 @Component
 public class PolicyFactory {
 
-    @SuppressWarnings("unchecked")
+    // creation method, similar with factory method
     public PasswordPolicy generatePasswordPolicyFor(User user) {
         Set<Policy> policies = generateCommonPolicy(user);
         policies.add(new LengthPolicy(8, 20));
@@ -21,7 +21,6 @@ public class PolicyFactory {
     }
 
 
-    @SuppressWarnings("unchecked")
     public UsernamePolicy generateUsernamePolicyFor(User user) {
         Set<Policy> policies = generateCommonPolicy(user);
         policies.add(new LengthPolicy(4, 20));
@@ -43,7 +42,8 @@ public class PolicyFactory {
         policies.add(new NotIncludingNamePolicy(person.getFirstName(), person.getLastName()));
 
         ContactInformation contactInformation = person.getContactInformation();
-        policies.add(new NotSameWithTelephonNumberPolicy(contactInformation.getTelephoneNumber()));
+        policies.add(new NotSameWithTelephoneNumberPolicy(contactInformation.getTelephoneNumber()));
+
         return policies;
     }
 }
