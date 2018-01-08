@@ -5,7 +5,7 @@ import com.example.ist.domain.model.identity.TelephoneNumber;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class NotSameWithTelephonNumberPolicy implements Policy {
+public class NotSameWithTelephoneNumberPolicy implements Policy {
     private final TelephoneNumber telephoneNumber;
 
     @Override
