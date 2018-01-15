@@ -1,7 +1,7 @@
 <!-- $theme: gaia -->
 <!-- page_number: true -->
 <!-- *page_number: false -->
-<!-- footer: リファクタリング入門 -->
+<!-- footer: オブジェクト指向入門 -->
 
 # オブジェクト指向勉強会
 〜手続き型とOOPの比較の一例〜
